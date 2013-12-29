@@ -1,7 +1,7 @@
 /*
 ===============================================================================
  Name        : main.c
- Author      : $(author)
+ Author      : Dileepkay
  Version     :
  Copyright   : $(copyright)
  Description : main definition
