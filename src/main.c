@@ -1,59 +1,102 @@
+/*
+===============================================================================
+ Name        : main.c
+ Author      : $(author)
+ Version     :
+ Copyright   : $(copyright)
+ Description : main definition
+===============================================================================
+*/
 #include "Default.h"
 
-#ifndef ININT_H_
-	#include "Initializations.h"
-#endif
+#include <cr_section_macros.h>
+#include <NXP/crp.h>
+
+// Variable to store CRP value in. Will be placed automatically
+// by the linker when "Enable Code Read Protect" selected.
+// See crp.h header for more information
+__CRP const unsigned int CRP_WORD = CRP_NO_CRP;
 
 
 #ifdef __USE_CMSIS
 	#include "LPC17xx.h"
 #endif
-//extern int gTemp;
-//extern int g_for_0;
-//extern int g_for_1;
+#ifdef ININT_H_
+	#include "Initializations.h"
+#endif
+//#include "Initializations.h"
+#include <stdio.h>
+int gTemp = 0;  //Global variable
 
-void Testing ( void )
 
+// TODO: insert other definitions and declarations here
+
+int main(void)
 {
+
+	HardwareInitializations();		//All hardware peripherals are initialised here
+
+/*
+	#if RGBLED
+		RGBLED_init();
+	#endif //#if RGBLED
+
+	#if SYSTICK_TIMER
+		SYSTICK_init();
+	#endif //#if SYSTICK_TIMER
+
+	#if UART
+		UART_init();
+	#endif //#if UART
+	
+	#if LED2
+		LED2_init();
+	#endif //#if LED
+
+	#if PBUTTON_4
+		PButton_init();
+	#endif
+
+//*/
+
+	while(1)
+	{
+		Testing ();					// All features testing is defined here
+
+/*
 	#if RGB_TESTING
 		LPC_GPIO0->FIOCLR = ( 1 << 26 );	// Blue
 		LPC_GPIO2->FIOCLR = ( 1 << 0 );		// Red
 		LPC_GPIO2->FIOCLR = ( 1 << 1 );		// Green
 
-		for ( gTemp = 0; gTemp < 10000000; gTemp++ );
+		for ( temp = 0; temp < 10000000; temp++ );
 		LPC_GPIO2->FIOSET = (1 << 0);
 
-		for ( gTemp = 0; gTemp < 10000000; gTemp++ );
+		for ( temp = 0; temp < 10000000; temp++ );
 		LPC_GPIO2->FIOSET = (1 << 1);
 		LPC_GPIO2->FIOCLR = (1 << 0);
 
-		for ( gTemp = 0; gTemp < 10000000; gTemp++ );
+		for ( temp = 0; temp < 10000000; temp++ );
 		LPC_GPIO0->FIOSET = (1 << 26);
 		LPC_GPIO2->FIOCLR = (1 << 1);
 
-		for ( gTemp = 0; gTemp < 10000000; gTemp++ );
+		for ( temp = 0; temp < 10000000; temp++ );
 	#endif //#if RGB_TESTING
 
-	#if LED2_TESTING
+	#if LED_TESTING
 		LPC_GPIO0->FIOSET = ( 1 << 22 );
-		for ( gTemp = 0; gTemp < 1000000; gTemp++ );
+		for ( temp = 0; temp < 1000000; temp++ );
 		LPC_GPIO0->FIOCLR = ( 1 << 22 );
-		for ( gTemp = 0; gTemp < 1000000; gTemp++ );
+		for ( temp = 0; temp < 1000000; temp++ );
 	#endif
 
 	#if PUSHBUTTON_TESTING
-		#if PBUTTON_4
-			gTemp = LPC_GPIO1->FIOPIN & ( 1 << 31 ); // Read data from P1.31
-			printf( "\nData from SW4 = %d", gTemp );
-		#endif
+		temp = LPC_GPIO1->FIOPIN & ( 1 << 31 ); // Read data from P1.31
+		printf( "\nData from SW4 = %d", temp );
 
-		#if PBUTTON_3
-			gTemp = LPC_GPIO2->FIOPIN & ( 1 << 20 ); // Read data from P2.10
-			printf( "\nData from SW3 = %d", gTemp );
-		#endif
 	#endif
 
-	#if LED2_PBUTTON_TESTING
+	#if LED_PBUTTON_TESTING
 		if  ( ( LPC_GPIO1->FIOPIN & ( 1 << 31 ) ) == 0 )
 		{
 			LPC_GPIO0->FIOSET = ( 1 << 22 );
@@ -111,18 +154,8 @@ void Testing ( void )
 			LPC_GPIO2->FIOCLR = (1 << 1);		// Green
 		}
 	#endif
+// */
 
-	#if SEVEN_SEGMENT_TESTING
-
-		//extern char Codes[10];
-		for ( g_for_1 = 0; g_for_1 < 10; g_for_1++)
-		{
-			M_Enable_CS;
-			SPI_SendData( Codes[g_for_1] );
-			M_Disable_CS;
-			for (g_for_0=0; g_for_0<10000000; g_for_0++);
-		}
-	#endif
-
-}
-
+	} // while (1)
+	return 0 ;
+} // main()
