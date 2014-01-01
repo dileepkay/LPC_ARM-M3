@@ -45,7 +45,60 @@ int SPI_ReceiveData(void)
 	while ( ( LPC_SSP1->SR & ( 1 << 2 ) ) == 0 );		// Check if Receive Buffer is empty
 	return ( LPC_SSP1->DR);								// Read Data
 }
+#endif //#if SPI
 
-#endif
+#if I2C
+
+int I2C_Start (void)
+{
+	LPC_I2C2->I2CONCLR	= ( 1 << 3 );						// Clear Interrupt
+	LPC_I2C2->I2CONSET	= ( 1 << 5 );						// Set Start Flag
+
+	while ( ( LPC_I2C2->I2CONSET & ( 1 << 3 ) ) == 0 );		// Wait for Interrupt
+
+	LPC_I2C2->I2CONCLR = ( 1 << 5 );						// Clear Flag
+
+	return ( LPC_I2C2->I2STAT & 0xF8 );						// Return status
+
+}
+
+void I2C_Stop (void)
+{
+	LPC_I2C2->I2CONCLR = ( 1 << 3 );						// Clear Interrupt
+	LPC_I2C2->I2CONSET = ( 1 << 4 );						// Set Stop Flag
+}
+
+int I2C_SendByte(int DataByte)
+{
+	LPC_I2C2->I2CONCLR = ( 1 << 3 );						// Clear Interrupt
+	LPC_I2C2->I2DAT = DataByte & 0xFF;						// Send DataByte
+
+	while ( ( LPC_I2C2->I2CONSET & ( 1 << 3 ) ) == 0 );		// Wait for Interrupt
+
+	return ( LPC_I2C2->I2STAT & 0xF8 );
+}
+
+int I2C_GetByte(int ack)
+{
+	if ( ack == 1 )
+	{
+		LPC_I2C2->I2CONSET = ( 1 << 2 );						// Set Acknowledgement Flag
+	}
+	else
+	{
+		LPC_I2C2->I2CONCLR = ( 1 << 2 );						// Clear Acknowledgement Flag
+	}
+
+	LPC_I2C2->I2CONCLR = ( 1 << 3 );						// Clear Interrupt
+
+	while ( ( LPC_I2C2->I2CONSET & ( 1 << 3 ) ) == 0 );		// Wait for Interrupt
+
+	if ( ( ( LPC_I2C2->I2STAT & 0xF8 ) == 0x50 ) | ( ( LPC_I2C2->I2STAT & 0xF8 ) == 0x58 ) )
+	{
+		return (LPC_I2C2->I2DAT & 0xFF );
+	}
+	return 0;
+}
+#endif // #if I2C
 
 

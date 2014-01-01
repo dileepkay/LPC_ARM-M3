@@ -48,9 +48,19 @@ int SPI_ReceiveData(void);
 #endif
 
 #if SEVEN_SEGMENT
-char Codes[10] = {0xAF, 0xE0, 0x24, 0xA2, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77};
+char Codes[10] = {0xAF, 0xE0, 0x24, 0xA2, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77};		//Characters are not correct!
 void Seven_Segment_init(void);
 #endif
+
+#if I2C
+void I2C_IO_init(void);
+void I2C_init(void);
+int I2C_Start(void);
+void I2C_Stop(void);
+int I2C_SendByte(int );
+int I2C_GetByte(int );
+#endif
+
 
 
 #endif //if INIT_H

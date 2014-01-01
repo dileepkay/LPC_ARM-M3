@@ -124,5 +124,62 @@ void Testing ( void )
 		}
 	#endif
 
+	#if I2C
+
+	int i = 0, j = 0;
+	int datawrite[5] = { 0xF0, 0x01, 0x03, 0x05, 0x07 };
+	int dataread[4];
+
+	while(1)
+	{
+		if ( I2C_Start() == 0x08 )
+		{
+			if ( I2C_SendByte(0xA0) == 0x18 )
+			{
+				for (i=0; i<5; i++)
+				{
+					I2C_SendByte(datawrite[i]);
+				}
+			}
+		}
+		I2C_Stop();
+
+		for (j=0; j<100000; j++);
+
+		for (i=1; i<5; i++)
+		{
+			printf("Data written is %x \n", datawrite[i]);
+		}
+
+		if ( I2C_Start() == 0x08 )
+		{
+			if ( I2C_SendByte(0xA0) == 0x18 )
+			{
+				if (I2C_SendByte(0xF0) == 0x28 )
+				{
+					if( I2C_Start() == 0x10 )
+					{
+						if( I2C_SendByte(0xA1) == 0x40 )
+						{
+							for ( i=0; i<3; i++ )
+							{
+								dataread[i] = I2C_GetByte(1);
+							}
+								dataread[3] = I2C_GetByte(0);
+						}
+					}
+				}
+			}
+		}
+		I2C_Stop();
+
+		for (i=0; i<4; i++)
+		{
+			printf("Data Read is %x\n", dataread[i]);
+		}
+	}
+
+	#endif
+
 }
 

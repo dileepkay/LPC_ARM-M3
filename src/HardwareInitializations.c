@@ -41,4 +41,8 @@ void HardwareInitializations(void)
 		Seven_Segment_init();
 	#endif
 
+	#if I2C
+		I2C_IO_init();
+		I2C_init();
+	#endif
 }

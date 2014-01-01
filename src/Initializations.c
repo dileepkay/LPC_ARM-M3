@@ -180,4 +180,28 @@ void Seven_Segment_init()
 }
 #endif
 
+#if I2C
+void I2C_IO_init()
+{
+	LPC_PINCON->PINSEL0 |= ( 2 << 20 );				// Set P0.10 and P0.11 to Binary 10 - SDA2 and SCL2
+	LPC_PINCON->PINSEL0 |= ( 2 << 22 );
+
+	LPC_PINCON->PINMODE0 &= ( ~ ( 3 << 20 ) );		// Set P0.10 and P0.11 to Binary 10 - enable on-chip pull-up resistor
+	LPC_PINCON->PINMODE0 &= ( ~ ( 3 << 22 ) );
+}
+
+void I2C_init(void)
+{
+	LPC_SC->PCONP	 |= ( 1 << 26 );									// Turn on power for I2C2 module
+
+	LPC_SC->PCLKSEL1 |= ( 2 << 20 );									// Set I2C2 Clock Rate to 100KHz ( CCLK/2 = 50MHz)
+	LPC_I2C2->I2SCLH = 250;
+	LPC_I2C2->I2SCLL = 250;
+
+	LPC_I2C2->I2CONCLR = ( ( 1 << 2 ) | ( 1 << 5 ) | ( 1 << 6 ) ); 		//Set I2C operation to default, I2C control Clear Register
+
+	LPC_I2C2->I2CONSET = ( 1 << 6 );									// Enable I2C Interface
+}
+#endif
+
 //}

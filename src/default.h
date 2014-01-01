@@ -14,7 +14,7 @@
 #define SYSTICK_TIMER			0
 #define UART					0
 
-#define LED2					1    	// LED2
+#define LED2					0    	// LED2
 
 #define PBUTTON_3				0		// SW3   Switch without interrupt is not working
 #define PBUTTON_4				0		// SW4
@@ -25,6 +25,7 @@
 #define INTERRUPT				0
 
 #define SPI						0
+#define I2C						1
 
 #define SEVEN_SEGMENT			0		// Seven Segment uses SPI protocol
 
@@ -49,7 +50,7 @@
 // Flags for Testing
 // -----------------------------------------
 #define PUSHBUTTON_TESTING		0
-#define LED2_TESTING			1
+#define LED2_TESTING			0
 #define LED2_PBUTTON_TESTING	0
 
 #define RGB_TESTING 			0

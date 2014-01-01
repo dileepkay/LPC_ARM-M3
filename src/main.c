@@ -21,7 +21,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP;
 #ifdef __USE_CMSIS
 	#include "LPC17xx.h"
 #endif
-#ifdef ININT_H_
+
+#ifndef ININT_H_
 	#include "Initializations.h"
 #endif
 //#include "Initializations.h"
