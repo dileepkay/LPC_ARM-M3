@@ -1,20 +1,27 @@
 #include "Default.h"
 
-#ifndef ININT_H_
+//#ifndef ININT_H_
 	#include "Initializations.h"
-#endif
-
+//#endif
 
 #ifdef __USE_CMSIS
 	#include "LPC17xx.h"
 #endif
-extern int gTemp;
-//extern int g_for_0;
-//extern int g_for_1;
 
-void Testing ( void )
+//#include <stdio.h>
+extern int gTemp;
+extern int g_for_0;
+extern int g_for_1;
+
+
+void Testing_inWhileLoop ( void )
 
 {
+	#if SEVEN_SEGMENT
+		char Codes[10] = {0xAF, 0xE0, 0x24, 0xA2, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77};		//Characters are not correct!
+	#endif
+
+
 	#if RGB_TESTING
 		LPC_GPIO0->FIOCLR = ( 1 << 26 );	// Blue
 		LPC_GPIO2->FIOCLR = ( 1 << 0 );		// Red
@@ -124,14 +131,30 @@ void Testing ( void )
 		}
 	#endif
 
-	#if I2C
+}
 
-	int i = 0, j = 0;
-	int datawrite[5] = { 0xF0, 0x01, 0x03, 0x05, 0x07 };
-	int dataread[4];
+void Testing_noWhileLoop()
+{
 
-	while(1)
-	{
+#if I2C_TESTING_1
+
+int i = 0, j = 0;
+char datawrite[5] = { 0xF0, 0x01, 0x03, 0x05, 0x07 };
+char dataread[4];
+
+#endif
+
+#if I2C_TESTING_2
+
+int i = 0;
+int datawrite[9] = {0x12,0x97,0x80,0x00,0x00,0x66,0x66,0x66,0x66};
+
+#endif
+
+#if I2C_TESTING_1
+
+	//while(1)
+	//{
 		if ( I2C_Start() == 0x08 )
 		{
 			if ( I2C_SendByte(0xA0) == 0x18 )
@@ -146,10 +169,11 @@ void Testing ( void )
 
 		for (j=0; j<100000; j++);
 
-		for (i=1; i<5; i++)
-		{
-			printf("Data written is %x \n", datawrite[i]);
-		}
+		//for (i=1; i<5; i++)
+		//{
+			UART_printf("\n\rData written is ");
+			UART_printf( itoa ( datawrite[i] ) );
+		//}
 
 		if ( I2C_Start() == 0x08 )
 		{
@@ -173,13 +197,29 @@ void Testing ( void )
 		}
 		I2C_Stop();
 
-		for (i=0; i<4; i++)
-		{
-			printf("Data Read is %x\n", dataread[i]);
-		}
-	}
+		//for (i=0; i<4; i++)
+		//{
+			UART_printf("\n\r Data Read is = ");
+			UART_printf( itoa (dataread[i]) );
+		//}
+	//}
 
-	#endif
+#endif
+
+#if I2C_TESTING_2
+
+			if(I2C_Start() == 0x08)
+			{
+				if(I2C_SendByte(0xC0) == 0x18)
+				{
+					for (i = 0; i < 9; i++)
+					{
+						I2C_SendByte(datawrite[i]);
+					}
+				}
+			}
+			I2C_Stop();
+#endif // #if I2C_TESTING_2
 
 }
 

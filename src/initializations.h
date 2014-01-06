@@ -3,12 +3,15 @@
 #ifndef ININT_H_
 #define ININT_H_
 
-int g_for_0 = 0;	// Temporary Global variable used for for-loop
-int g_for_1 = 0;	// Temporary Global variable used for for-loop
-int g_for_2 = 0;	// Temporary Global variable used for for-loop
+//int g_for_0 = 0;	// Temporary Global variable used for for-loop
+//int g_for_1 = 0;	// Temporary Global variable used for for-loop
+//int g_for_2 = 0;	// Temporary Global variable used for for-loop
 
-void Testing(void);
+void Testing_inWhileLoop(void);
+void Testing_noWhileLoop(void);
 void HardwareInitializations(void);
+char* itoa( int );
+
 
 #if SYSTICK_TIMER
 void SYSTICK_init(void);				// Declaration :: System Timer Initialization
@@ -20,6 +23,8 @@ void RGBLED_init(void); 				// Declaration :: RGB_LED Initialization
 
 #if UART
 void UART_init(void);
+void UART_IO_init(void);
+void UART_printf(char *);
 #endif //#if UART
 
 #if LED2
@@ -48,7 +53,7 @@ int SPI_ReceiveData(void);
 #endif
 
 #if SEVEN_SEGMENT
-char Codes[10] = {0xAF, 0xE0, 0x24, 0xA2, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77};		//Characters are not correct!
+//char Codes[10] = {0xAF, 0xE0, 0x24, 0xA2, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77};		//Characters are not correct!
 void Seven_Segment_init(void);
 #endif
 

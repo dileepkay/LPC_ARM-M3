@@ -68,27 +68,35 @@ void JoyStick_init()
 #endif
 
 #if UART
+void UART_IO_init(void)
+{
+	LPC_PINCON->PINSEL0 |= ( 2 << 0 );			// Set P0.0 to Binary 10 - TXD3
+	LPC_PINCON->PINSEL0 |= ( 2 << 2 );			// Set P0.1 to Binary 10 - RXD3
+
+	LPC_PINCON->PINMODE0 |= ( 2 << 0 );			// Set P0.0 and P0.1 to Binary 10 - Pin has neither pull-up nor pull-down resistor enabled
+	LPC_PINCON->PINMODE0 |= ( 3 << 2 );
+}
+
 void UART_init(void)
 {
-	//Turn on Power for UART Interface
-	LPC_SC->PCONP |= (1 << 25);
-	//Set PCLK_UART3 to CCLK/4 - 25MHz
-	LPC_SC->PCLKSEL1 &= (~(3 << 18)) ;
-	//Set Data Format: 8 bit Data, 1 Stop Bit,
-	LPC_UART3->LCR |= (3 << 0);
+	LPC_SC->PCONP |= (1 << 25);					//Turn on Power for UART Interface
+
+	LPC_SC->PCLKSEL1 &= (~(3 << 18)) ;			//Set PCLK_UART3 to CCLK/4 - 25MHz
+
+	LPC_UART3->LCR |= (3 << 0);					//Set Data Format: 8 bit Data, 1 Stop Bit,
 	LPC_UART3->LCR &= (~(1 << 2));
-	// Set BaudRate to 115200bps
-	LPC_UART3->LCR |= (1 << 7);
+
+	LPC_UART3->LCR |= (1 << 7);					// Set BaudRate to 115200bps
 	LPC_UART3->DLM = 0;
 	LPC_UART3->DLL = 9;
 	LPC_UART3->FDR = 0x21;
 	LPC_UART3->LCR &= (~(1 << 7));
-	//Enable FIFO
-	LPC_UART3->FCR |= (1 << 0);
-	//Enable Interrupts
-	LPC_UART3->IER |= (3 << 0);
-	// Enable Transmission
-	LPC_UART3->TER |= (1 << 7);
+
+	LPC_UART3->FCR |= (1 << 0);					//Enable FIFO
+
+	LPC_UART3->IER |= (3 << 0);					//Enable Interrupts
+
+	LPC_UART3->TER |= (1 << 7);					// Enable Transmission
 }
 #endif //#if UART
 

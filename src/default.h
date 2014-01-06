@@ -25,7 +25,7 @@
 #define INTERRUPT				0
 
 #define SPI						0
-#define I2C						1
+#define I2C						0
 
 #define SEVEN_SEGMENT			0		// Seven Segment uses SPI protocol
 
@@ -58,20 +58,8 @@
 #define RGB_JOYSTICK_TESTING	0
 
 #define SEVEN_SEGMENT_TESTING	0
-
+#define I2C_TESTING_1			0
+#define I2C_TESTING_2			0
 
 // -----------------------------------------
 #endif	// define DEFAULTS_H_
-
-
-
-
-
-
-
-
-
-
-
-
-
