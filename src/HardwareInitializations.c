@@ -5,12 +5,21 @@
  *      Author: User
  */
 #include "Default.h"
-//#ifndef ININT_H_
-	#include "Initializations.h"
-//#endif
+#include "Initializations.h"
+
 
 void HardwareInitializations()
 {
+	#if UART
+		UART_IO_init();
+		UART_init();
+
+		UART_printf("\n\r===============");
+		UART_printf("\n\rProgram Started");
+		UART_printf("\n\r===============");
+
+	#endif //#if UART
+
 	#if RGBLED
 		RGBLED_init();
 	#endif //#if RGBLED
@@ -18,11 +27,6 @@ void HardwareInitializations()
 	#if SYSTICK_TIMER
 		SYSTICK_init();
 	#endif //#if SYSTICK_TIMER
-
-	#if UART
-		UART_IO_init();
-		UART_init();
-	#endif //#if UART
 
 	#if LED2
 		LED2_init();

@@ -15,11 +15,13 @@
 void SYSTICK_init(void)
 {
 	//Set value for Systick Reload Value Register.
-	SysTick->LOAD = 999999;
+	SysTick->LOAD = 0xFFFFFFFF;
 	//Clear Systick Current Value Register.
 	SysTick->VAL = 0;
 	//Enable Systick Counter, Systick Interrupt and Select CPU clock as clock source.
 	SysTick->CTRL = 7;
+
+	UART_printf("\n\rEnabled Systic Timer with LED2");
 }
 #endif
 
@@ -97,6 +99,8 @@ void UART_init(void)
 	LPC_UART3->IER |= (3 << 0);					//Enable Interrupts
 
 	LPC_UART3->TER |= (1 << 7);					// Enable Transmission
+
+	//UART_printf("\n\rEnabled UART");
 }
 #endif //#if UART
 

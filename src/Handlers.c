@@ -1,10 +1,11 @@
 #include "Default.h"
+#include "Initializations.h"
 
 #ifdef __USE_CMSIS
 	#include "LPC17xx.h"
 #endif
 
-extern int gTemp;
+//extern int gTemp;
 
 #if SYSTICK_TIMER
 // -----------------------------------------
@@ -12,8 +13,22 @@ extern int gTemp;
 // -----------------------------------------
 void SysTick_Handler(void)
 {
-	printf("Systic Counting %d\n",gTemp);
-	gTemp++;
+	gTemp ^= TRUE;
+//	( ( gTemp ) ? LPC_GPIO0->FIOSET = ( 1 << 22 ) : LPC_GPIO0->FIOCLR = ( 1 << 22 ) );      // Not Working
+	if ( gTemp )
+	{
+		LPC_GPIO0->FIOSET = ( 1 << 22 );
+	}
+	else
+	{
+		LPC_GPIO0->FIOCLR = ( 1 << 22 );
+	}
+
+#if DEBUG_PRINT
+	UART_printf("\n\rSystic Counting = ");
+	UART_printf(itoa(gTemp));
+#endif
+
 }
 #endif 
 

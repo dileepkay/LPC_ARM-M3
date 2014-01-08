@@ -1,17 +1,11 @@
 #include "Default.h"
-
-//#ifndef ININT_H_
-	#include "Initializations.h"
-//#endif
+#include "Initializations.h"
 
 #ifdef __USE_CMSIS
 	#include "LPC17xx.h"
 #endif
 
-//#include <stdio.h>
-extern int gTemp;
-extern int g_for_0;
-extern int g_for_1;
+//extern int gTemp;
 
 
 void Testing_inWhileLoop ( void )
@@ -219,6 +213,7 @@ int datawrite[9] = {0x12,0x97,0x80,0x00,0x00,0x66,0x66,0x66,0x66};
 				}
 			}
 			I2C_Stop();
+	UART_printf("\n\rEnabled I2C Testing 2");
 #endif // #if I2C_TESTING_2
 
 }

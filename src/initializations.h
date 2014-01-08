@@ -3,9 +3,15 @@
 #ifndef ININT_H_
 #define ININT_H_
 
-//int g_for_0 = 0;	// Temporary Global variable used for for-loop
-//int g_for_1 = 0;	// Temporary Global variable used for for-loop
-//int g_for_2 = 0;	// Temporary Global variable used for for-loop
+extern int gTemp;
+extern int g_for_0;	// Temporary Global variable used for for-loop
+extern int g_for_1;	// Temporary Global variable used for for-loop
+extern int g_for_2;	// Temporary Global variable used for for-loop
+
+#define TRUE	1
+#define FALSE	0
+#define PASS	TRUE
+#define FAIL	FALSE
 
 void Testing_inWhileLoop(void);
 void Testing_noWhileLoop(void);
@@ -65,8 +71,6 @@ void I2C_Stop(void);
 int I2C_SendByte(int );
 int I2C_GetByte(int );
 #endif
-
-
 
 #endif //if INIT_H
 

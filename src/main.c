@@ -17,15 +17,12 @@
 // See crp.h header for more information
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP;
 
-
 #ifdef __USE_CMSIS
 	#include "LPC17xx.h"
 #endif
 
-//#ifndef ININT_H_
-	#include "Initializations.h"
-//#endif
-//#include "Initializations.h"
+#include "Initializations.h"
+
 //#include <stdio.h>
 
 int gTemp = 0;  //Global variable
